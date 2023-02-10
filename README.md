@@ -25,4 +25,9 @@ $ npm run android # for android
 ```
 
 ## Server
-In order run the server, you need to install `docker` and `docker-compose`
+In order run the server, you need to install `docker` and `docker-compose`. Then, you can run:
+
+```bash
+cd server/
+docker compose up
+```
