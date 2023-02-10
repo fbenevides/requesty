@@ -3,7 +3,7 @@ import { User } from "./user";
 
 export class API {
   private _user: User;
-  private baseUrl = "https://f87b-2a02-a210-2547-e600-1ca-37f8-8b73-5819.ngrok.io"
+  private baseUrl = "<SOME-API-URL>"
 
   constructor(user: User) {
     this._user = user;

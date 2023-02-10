@@ -126,8 +126,8 @@ function App(): JSX.Element {
 
   const connect = async () => {
     await pusher.init({
-      apiKey: "ebe598fd4b9c310a4498",
-      cluster: "multimedia",
+      apiKey: "<API-KEY>",
+      cluster: "<API-CLUSTER>",
       onConnectionStateChange: updateSubtitle,
       onSubscriptionCount: onSubscriptionCountReceived,
       onAuthorizer: onAuthorizer,
