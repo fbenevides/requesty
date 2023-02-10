@@ -31,3 +31,8 @@ In order run the server, you need to install `docker` and `docker-compose`. Then
 cd server/
 docker compose up
 ```
+
+iOS requires HTTPS connections and therefore you can use something like [ngrok](https://ngrok.com/) to expose your local environment:
+```
+ngrok http 2000
+```
