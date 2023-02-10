@@ -1,5 +1,4 @@
 import { PropsWithChildren } from "react";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { StyleSheet, Text , View } from "react-native";
 
 type HeroProps = PropsWithChildren<{
@@ -10,24 +9,12 @@ type HeroProps = PropsWithChildren<{
 export function Hero({title, connectionState}: HeroProps): JSX.Element {
   return (
     <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.heroTitle,
-          {
-            color: Colors.black,
-          },
-        ]}>
+      <Text style={styles.heroTitle}>
         {title}
       </Text>
 
       <View style={styles.channelInfoContainer}>
-        <Text
-          style={[
-            styles.heroSubtitle,
-            {
-              color: Colors.dark,
-            },
-          ]}>
+        <Text style={styles.heroSubtitle}>
           status: {connectionState.toLowerCase()}
         </Text>
       </View>
