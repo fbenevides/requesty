@@ -18,12 +18,6 @@ $ pod install
 
 You also must rename `.env.example` to a `.env` with your own variables.
 
-## Running
-```bash
-$ npm run ios # for ios
-$ npm run android # for android
-```
-
 ## Server
 In order run the server, you need to install `docker` and `docker-compose`. Then, you can run:
 
@@ -36,3 +30,10 @@ iOS requires HTTPS connections and therefore you can use something like [ngrok](
 ```
 $ ngrok http 2000
 ```
+
+## Running
+```bash
+$ npm run ios # for ios
+$ npm run android # for android
+```
+
