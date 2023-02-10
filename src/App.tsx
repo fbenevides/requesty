@@ -15,6 +15,7 @@ import { Button } from './components/button';
 import { DefaultTextInput } from './components/text_input';
 import { API } from './models/api';
 import { User } from './models/user';
+import { PUSHER_CLUSTER, PUSHER_KEY } from '@env'
 
 function App(): JSX.Element {
   var allMessages: Message[] = [];
@@ -81,7 +82,8 @@ function App(): JSX.Element {
   };
 
   const onAuthorizer = async (channelName: string, socketId: string) => {
-    return api.authorize(loggedUser, channelName, socketId);
+    console.log('called');
+    return await api.authorize(loggedUser, channelName, socketId);
   };
 
   const onMemberChanged = (member: PusherMember) => {
@@ -96,7 +98,7 @@ function App(): JSX.Element {
   const disconnect = async () => {
     await pusher.unsubscribe({ channelName: channelToSubscribe });
     await pusher.disconnect();
-
+    
     allMessages = [];
 
     setMembers([]);
@@ -119,15 +121,10 @@ function App(): JSX.Element {
     }
   }
 
-  const trigger = async () => {
-    const response = api.trigger(channelToSubscribe);
-    alertError(JSON.stringify(response));
-  }
-
   const connect = async () => {
     await pusher.init({
-      apiKey: "<API-KEY>",
-      cluster: "<API-CLUSTER>",
+      apiKey: PUSHER_KEY,
+      cluster: PUSHER_CLUSTER,
       onConnectionStateChange: updateSubtitle,
       onSubscriptionCount: onSubscriptionCountReceived,
       onAuthorizer: onAuthorizer,
@@ -172,6 +169,7 @@ function App(): JSX.Element {
 
       <ChannelInfo
         api={api}
+        pusher={pusher}
         channelName={channelToSubscribe} 
         subscriptionState={subscriptionState} 
         subscriptionCount={subscriptionCount}

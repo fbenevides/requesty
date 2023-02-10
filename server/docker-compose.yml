@@ -1,0 +1,12 @@
+version: '3'
+services:
+  web:
+    image: node:18
+    working_dir: /app
+    container_name: 'channel_server'
+    command: node server.js
+    ports:
+      - "2000:2000"
+    volumes:
+      - '.:/app'
+      - '../.env:/app/.env'

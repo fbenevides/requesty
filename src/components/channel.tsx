@@ -1,7 +1,7 @@
-import { Component, PropsWithChildren, ReactNode, useState } from "react";
-import { StyleSheet, Text , View } from "react-native";
+import { PropsWithChildren, useState } from "react";
+import { Alert, StyleSheet, Text , View } from "react-native";
 import { API } from "../models/api";
-import { Channel } from "../models/channel";
+import { Pusher } from "@pusher/pusher-websocket-react-native"
 import { User } from "../models/user";
 import { Button } from "./button";
 
@@ -11,9 +11,10 @@ type ChannelInfoProps = PropsWithChildren<{
   subscriptionState: string;
   subscriptionCount: number;
   members: Array<User>;
+  pusher: Pusher
 }>;
 
-export function ChannelInfo({api, channelName, subscriptionState, subscriptionCount, members}: ChannelInfoProps): JSX.Element {
+export function ChannelInfo({api, pusher, channelName, subscriptionState, subscriptionCount, members}: ChannelInfoProps): JSX.Element {
   const isSubscribed = subscriptionState == 'subscribed';
   const [loading, setLoading] = useState(false);
 
@@ -22,6 +23,19 @@ export function ChannelInfo({api, channelName, subscriptionState, subscriptionCo
     api.trigger(channelName)
       .catch((e) => console.log(e))
       .finally(() => setLoading(false));
+  }
+
+  const triggerClientEvent = async () => {
+    const successMessage = "Client event sent successfully. Keep in mind that only other subscribers will receive client events.";
+
+    setLoading(true);
+    pusher.trigger({ 
+      eventName: 'client-event-test', 
+      channelName: channelName,
+      data: JSON.stringify({ message: `client-event sent ${Date.now()}` })
+    }).catch(e => console.log(e))
+    .then(() => Alert.alert('Requesty', successMessage))
+    .finally(() => setLoading(false));
   }
 
   if (isSubscribed) {
@@ -37,10 +51,18 @@ export function ChannelInfo({api, channelName, subscriptionState, subscriptionCo
 
         <MembersList members={members} />
 
+        <View style={{ marginBottom: 5 }}>
+          <Button 
+            onPress={trigger}
+            loadingWhile={loading}
+            title='Trigger random server event'
+          />
+        </View>
+        
         <Button 
-          onPress={trigger}
+          onPress={triggerClientEvent}
           loadingWhile={loading}
-          title='Trigger random server event'
+          title='Trigger client event'
         />
       </View>
     );

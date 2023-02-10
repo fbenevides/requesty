@@ -1,3 +1,4 @@
+import { API_URL, PUSHER_CLUSTER, PUSHER_KEY } from "@env";
 import { PropsWithChildren } from "react";
 import { StyleSheet, Text , View } from "react-native";
 
@@ -14,6 +15,15 @@ export function Hero({title, connectionState}: HeroProps): JSX.Element {
       </Text>
 
       <View style={styles.channelInfoContainer}>
+        <View style={{ marginBottom: 8 }}>
+          <Text style={styles.heroSubtitle}>
+            key: {PUSHER_KEY}
+          </Text>
+          <Text style={styles.heroSubtitle}>
+            cluster: {PUSHER_CLUSTER}
+          </Text>
+        </View>
+        
         <Text style={styles.heroSubtitle}>
           status: {connectionState.toLowerCase()}
         </Text>
